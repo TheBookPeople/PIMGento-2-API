@@ -123,6 +123,9 @@ class Product extends Import
         'SUBSTITUTION',
         'UPSELL',
         'X_SELL',
+        //
+        'stock_qty',
+        'backorders'
     ];
     /**
      * This variable contains a ProductImportHelper
@@ -1250,11 +1253,12 @@ class Product extends Import
         $values = [
             'product_id'                => '_entity_id',
             'stock_id'                  => new Expr(1),
-            'qty'                       => new Expr(0),
-            'is_in_stock'               => new Expr(0),
+            'qty'                       => 'stock_qty',
+            'is_in_stock'               => new Expr('IF(`stock_qty` > 0, 1, 0)'),
             'low_stock_date'            => new Expr('NULL'),
             'stock_status_changed_auto' => new Expr(0),
             'website_id'                => new Expr($websiteId),
+            'backorders'                => 'backorders'
         ];
 
         /** @var Select $select */

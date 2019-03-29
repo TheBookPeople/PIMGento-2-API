@@ -224,6 +224,25 @@ class Entities extends AbstractHelper
             'Is New'
         );
 
+        $table->addColumn(
+            '_stock_qty',
+            \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
+            1,
+            ['default' => 0.0],
+            'Stock Qty'
+        );
+
+
+        $table->addColumn(
+            '_backorders',
+            \Magento\Framework\DB\Ddl\Table::TYPE_SMALLINT,
+            1,
+            ['default' => 0],
+            'Backorders'
+        );
+
+
+
         $table->setOption('type', 'MYISAM');
 
         $this->connection->createTable($table);

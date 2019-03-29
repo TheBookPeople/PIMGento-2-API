@@ -227,7 +227,7 @@ class Entities extends AbstractHelper
         $table->addColumn(
             '_stock_qty',
             \Magento\Framework\DB\Ddl\Table::TYPE_DECIMAL,
-            1,
+            '12,4',
             ['default' => 0.0],
             'Stock Qty'
         );

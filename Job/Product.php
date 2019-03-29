@@ -551,7 +551,7 @@ class Product extends Import
                 }
 
                 if (strlen($value) > 0) {
-                    $data[$column] = new Expr('"' . $value . '"');
+                    $data[$column] = new Expr($value);
 
                     continue;
                 }
@@ -870,7 +870,7 @@ class Product extends Import
                 continue;
             }
 
-            if (empty($columnParts[1]) && !isset($values[0][$columnPrefix])) {
+            if (empty($columnParts[1])) {
                 // No channel and no locale found: attribute scope naturally is Global
                 $values[0][$columnPrefix] = $column;
 

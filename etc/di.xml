@@ -349,6 +349,10 @@
                         <item name="method" xsi:type="string">cleanCache</item>
                         <item name="comment" xsi:type="string">Clean cache</item>
                     </item>
+                    <item name="20" xsi:type="array">
+                        <item name="method" xsi:type="string">markAsCompleted</item>
+                        <item name="comment" xsi:type="string">Mark As Completed</item>
+                    </item>
                 </item>
             </argument>
         </arguments>

@@ -30,6 +30,7 @@ use Pimgento\Api\Helper\Serializer as JsonSerializer;
 use Pimgento\Api\Helper\Import\Product as ProductImportHelper;
 use Zend_Db_Expr as Expr;
 use Zend_Db_Statement_Pdo;
+use GuzzleHttp\Client;
 
 /**
  * Class Product
@@ -182,6 +183,7 @@ class Product extends Import
      */
     protected $storeHelper;
 
+
     /**
      * Product constructor.
      *
@@ -240,8 +242,8 @@ class Product extends Import
         $products = $products->getItems();
         if (empty($products)) {
             $this->setMessage(__('No results from Akeneo'));
+            $this->markAsCompleted();
             $this->stop(true);
-
             return;
         }
 
@@ -265,14 +267,16 @@ class Product extends Import
         $products = $this->akeneoClient->getProductApi()->all($paginationSize, $filters);
         /** @var int $index */
         $index = 0;
+        $found = false;
         /**
          * @var int $index
          * @var array $product
          */
         foreach ($products as $index => $product) {
             $this->entitiesHelper->insertDataFromApi($product, $this->getCode());
+            $found =true;
         }
-        if ($index) {
+        if ($found) {
             $index++;
         }
 
@@ -2002,6 +2006,41 @@ class Product extends Import
         }
 
         $this->setMessage(__('Cache cleaned for: %1', join(', ', $types)));
+    }
+
+
+
+
+    /**
+     * Call back to "Akeneo" imposter to say import has competed
+     *
+     * @return void
+     */
+    public function markAsCompleted()
+    {
+
+        $baseUri = $this->configHelper->getAkeneoApiBaseUrl();
+        $username = $this->configHelper->getAkeneoApiUsername();
+
+        $client = new Client([
+            'base_uri' =>  $baseUri,
+            'timeout'  => 2.0,
+        ]);
+
+        $response  = $client->request('POST', '/api/rest/v1/products/exports-completed', [
+            'headers' => [
+                'Authorization' => 'Bearer ' . $username
+            ]
+        ]);
+
+        if ($response->getStatusCode() != 200) {
+            $this->setStatus(false);
+            $this->setMessage(__('Faild to Mark Export as complete'));
+
+        }
+
+
+        #$this->setMessage(__('Marked As Completed'));
     }
 
 }

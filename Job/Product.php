@@ -2019,6 +2019,12 @@ class Product extends Import
     public function markAsCompleted()
     {
 
+        if (!$this->configHelper->isMarkAsCompletedEnabled()) {
+            $this->setStatus(false);
+            $this->setMessage(__('Mark As Completed is not enabled'));
+            return;
+        }
+
         $baseUri = $this->configHelper->getAkeneoApiBaseUrl();
         $username = $this->configHelper->getAkeneoApiUsername();
 

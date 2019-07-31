@@ -43,6 +43,7 @@ class Config extends AbstractHelper
     const AKENEO_API_PAGINATION_SIZE = 'pimgento/akeneo_api/pagination_size';
     const AKENEO_API_ADMIN_CHANNEL = 'pimgento/akeneo_api/admin_channel';
     const AKENEO_API_WEBSITE_MAPPING = 'pimgento/akeneo_api/website_mapping';
+    const AKENEO_API_MARK_AS_COMPLETED_ENABLED = 'pimgento/akeneo_api/mark_as_completed';
     const PRODUCTS_FILTERS_MODE = 'pimgento/products_filters/mode';
     const PRODUCTS_FILTERS_COMPLETENESS_TYPE = 'pimgento/products_filters/completeness_type';
     const PRODUCTS_FILTERS_COMPLETENESS_VALUE = 'pimgento/products_filters/completeness_value';
@@ -533,6 +534,17 @@ class Config extends AbstractHelper
     {
         return $this->scopeConfig->isSetFlag(self::PRODUCT_URL_GENERATION_ENABLED);
     }
+
+    /**
+     * Description isMarkAsCompletedEnabled function
+     *
+     * @return bool
+     */
+    public function isMarkAsCompletedEnabled()
+    {
+        return $this->scopeConfig->isSetFlag(self::AKENEO_API_MARK_AS_COMPLETED_ENABLED);
+    }
+
 
     /**
      * Retrieve media attribute column

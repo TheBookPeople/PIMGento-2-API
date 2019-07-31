@@ -45,6 +45,11 @@
                     <label>Akeneo API client secret</label>
                     <validate>no-whitespace</validate>
                 </field>
+                <field id="mark_as_completed" translate="label" type="select" sortOrder="55" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Mark Export As Completed</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
                 <field id="api_test" translate="label" type="button" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
                     <frontend_model>Pimgento\Api\Block\Adminhtml\System\Config\Api\Test</frontend_model>
                     <label>Test API credentials</label>
